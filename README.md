@@ -1,5 +1,7 @@
 # SGV-APS: Sistema de Gestión y Venta de Artesanías del Pueblo Saraguro
 
+# Estudiante: Oliver Saraguro
+
 ## Documentación Técnica - Arquitectura de 3 Capas
 
 ---

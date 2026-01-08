@@ -12,7 +12,7 @@ El servidor estará disponible en: `http://localhost:3000`
 
 ---
 
-## 1. PRUEBAS DE ARTESANÍAS
+## 1. PRUEBAS DE ARTESANÍASS
 
 ### 1.1 Listar todas las artesanías (GET)
 ```bash

@@ -1,6 +1,6 @@
 # 🚀 INICIO RÁPIDO - SGV-APS
 
-## Sistema de Gestión y Venta de Artesanías del Pueblo Saraguro
+## Sistema de Gestión y Venta de Artesanías del Pueblo "Saraguro"
 
 ---
 

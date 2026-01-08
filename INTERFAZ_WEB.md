@@ -14,7 +14,7 @@ http://localhost:3000
 
 ---
 
-## 📱 Funcionalidades de la Interfaz
+## Funcionalidades de la Interfaz
 
 ### **Página de Inicio**
 - Dashboard con tarjetas de bienvenida
