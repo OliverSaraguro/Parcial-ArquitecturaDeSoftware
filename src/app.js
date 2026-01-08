@@ -9,29 +9,19 @@
  */
 
 const express = require('express');
+const path = require('path');
 const app = express();
 
 // Middleware para parsear JSON
 app.use(express.json());
 
+// Servir archivos estáticos (Interfaz Web)
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Importar rutas (Capa de Presentación)
 const artesaniaRoutes = require('./presentation/routes/artesaniaRoutes');
 const pedidoRoutes = require('./presentation/routes/pedidoRoutes');
 const feriaRoutes = require('./presentation/routes/feriaRoutes');
-
-// Ruta de bienvenida
-app.get('/', (req, res) => {
-  res.json({
-    mensaje: 'Bienvenido al Sistema de Gestión y Venta de Artesanías del Pueblo Saraguro (SGV-APS)',
-    version: '1.0.0',
-    arquitectura: '3 Capas (Presentación, Lógica de Negocio, Persistencia)',
-    endpoints: {
-      artesanias: '/api/artesanias',
-      pedidos: '/api/pedidos',
-      ferias: '/api/ferias'
-    }
-  });
-});
 
 // Registrar rutas
 app.use('/api/artesanias', artesaniaRoutes);
@@ -65,7 +55,10 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
   console.log('Arquitectura: 3 Capas (Presentación, Servicios, Persistencia)');
   console.log('');
-  console.log('Endpoints disponibles:');
+  console.log('🌐 Interfaz Web:');
+  console.log(`  ➜ http://localhost:${PORT}`);
+  console.log('');
+  console.log('📡 API REST Endpoints:');
   console.log(`  - GET    http://localhost:${PORT}/api/artesanias`);
   console.log(`  - POST   http://localhost:${PORT}/api/artesanias`);
   console.log(`  - GET    http://localhost:${PORT}/api/pedidos`);

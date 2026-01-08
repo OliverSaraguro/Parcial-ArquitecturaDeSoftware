@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGV-APS - Sistema de Gestión de Artesanías Saraguro</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>🎨 SGV-APS</h1>
+            <p>Sistema de Gestión y Venta de Artesanías del Pueblo Saraguro</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <button class="nav-btn active" data-section="inicio">Inicio</button>
+            <button class="nav-btn" data-section="artesanias">Artesanías</button>
+            <button class="nav-btn" data-section="pedidos">Pedidos</button>
+            <button class="nav-btn" data-section="ferias">Ferias</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Sección Inicio -->
+        <section id="inicio" class="section active">
+            <h2>Bienvenido al Sistema SGV-APS</h2>
+            <div class="welcome-grid">
+                <div class="welcome-card">
+                    <h3>🎨 Artesanías</h3>
+                    <p>Gestiona el catálogo de collares, aretes y manillas elaboradas por las artesanas de Saraguro.</p>
+                    <button class="btn btn-primary" onclick="showSection('artesanias')">Ver Catálogo</button>
+                </div>
+                <div class="welcome-card">
+                    <h3>🛒 Pedidos</h3>
+                    <p>Administra los pedidos de clientes con estados: Pendiente, Enviado, Entregado.</p>
+                    <button class="btn btn-primary" onclick="showSection('pedidos')">Ver Pedidos</button>
+                </div>
+                <div class="welcome-card">
+                    <h3>🎪 Ferias</h3>
+                    <p>Organiza ferias y promociona productos destacados para eventos especiales.</p>
+                    <button class="btn btn-primary" onclick="showSection('ferias')">Ver Ferias</button>
+                </div>
+            </div>
+            <div class="info-box">
+                <h3>📊 Arquitectura del Sistema</h3>
+                <p><strong>3 Capas:</strong> Presentación • Lógica de Negocio • Persistencia</p>
+                <p>Sistema desarrollado con Node.js + Express siguiendo Clean Architecture</p>
+            </div>
+        </section>
+
+        <!-- Sección Artesanías -->
+        <section id="artesanias" class="section">
+            <div class="section-header">
+                <h2>🎨 Catálogo de Artesanías</h2>
+                <button class="btn btn-primary" onclick="mostrarFormularioArtesania()">+ Nueva Artesanía</button>
+            </div>
+
+            <!-- Formulario Crear/Editar Artesanía -->
+            <div id="formArtesania" class="form-container hidden">
+                <h3 id="tituloFormArtesania">Nueva Artesanía</h3>
+                <form id="artesaniaForm">
+                    <input type="hidden" id="artesaniaId">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="artesaniaTipo" required>
+                            <option value="">Selecciona un tipo</option>
+                            <option value="collares">Collares</option>
+                            <option value="aretes">Aretes</option>
+                            <option value="manillas">Manillas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Material</label>
+                        <input type="text" id="artesaniaMaterial" placeholder="Ej: Plata y cuentas" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Precio ($)</label>
+                            <input type="number" id="artesaniaPrecio" step="0.01" min="0" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" id="artesaniaStock" min="0" placeholder="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Artesana</label>
+                        <input type="text" id="artesaniaArtesana" placeholder="Nombre de la artesana" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelarFormularioArtesania()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tabla de Artesanías -->
+            <div id="tablaArtesanias" class="table-container">
+                <div class="loading">Cargando artesanías...</div>
+            </div>
+        </section>
+
+        <!-- Sección Pedidos -->
+        <section id="pedidos" class="section">
+            <div class="section-header">
+                <h2>🛒 Gestión de Pedidos</h2>
+                <button class="btn btn-primary" onclick="mostrarFormularioPedido()">+ Nuevo Pedido</button>
+            </div>
+
+            <!-- Formulario Crear Pedido -->
+            <div id="formPedido" class="form-container hidden">
+                <h3>Nuevo Pedido</h3>
+                <form id="pedidoForm">
+                    <div class="form-group">
+                        <label>Nombre del Cliente</label>
+                        <input type="text" id="pedidoCliente" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email del Cliente</label>
+                        <input type="email" id="pedidoEmail" placeholder="cliente@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Artículos del Pedido</label>
+                        <div id="itemsPedido">
+                            <div class="item-pedido">
+                                <select class="item-artesania" required>
+                                    <option value="">Selecciona una artesanía</option>
+                                </select>
+                                <input type="number" class="item-cantidad" min="1" value="1" placeholder="Cantidad" required>
+                                <button type="button" class="btn-remove" onclick="removerItem(this)">✕</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="agregarItem()">+ Agregar Artículo</button>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Crear Pedido</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelarFormularioPedido()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filters">
+                <label>Filtrar por estado:</label>
+                <button class="filter-btn active" data-estado="todos">Todos</button>
+                <button class="filter-btn" data-estado="Pendiente">Pendiente</button>
+                <button class="filter-btn" data-estado="Enviado">Enviado</button>
+                <button class="filter-btn" data-estado="Entregado">Entregado</button>
+            </div>
+
+            <!-- Tabla de Pedidos -->
+            <div id="tablaPedidos" class="table-container">
+                <div class="loading">Cargando pedidos...</div>
+            </div>
+        </section>
+
+        <!-- Sección Ferias -->
+        <section id="ferias" class="section">
+            <div class="section-header">
+                <h2>🎪 Ferias y Promociones</h2>
+                <button class="btn btn-primary" onclick="mostrarFormularioFeria()">+ Nueva Feria</button>
+            </div>
+
+            <!-- Formulario Crear/Editar Feria -->
+            <div id="formFeria" class="form-container hidden">
+                <h3 id="tituloFormFeria">Nueva Feria</h3>
+                <form id="feriaForm">
+                    <input type="hidden" id="feriaId">
+                    <div class="form-group">
+                        <label>Nombre de la Feria</label>
+                        <input type="text" id="feriaNombre" placeholder="Ej: Feria Cultural Saraguro 2026" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <input type="text" id="feriaUbicacion" placeholder="Ej: Plaza Central de Saraguro" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha del Evento</label>
+                        <input type="date" id="feriaFecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Productos Destacados</label>
+                        <div id="productosDestacados" class="checkbox-group">
+                            <!-- Se llenará dinámicamente -->
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelarFormularioFeria()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tabla de Ferias -->
+            <div id="tablaFerias" class="table-container">
+                <div class="loading">Cargando ferias...</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SGV-APS - Pueblo Saraguro | Arquitectura de 3 Capas</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
