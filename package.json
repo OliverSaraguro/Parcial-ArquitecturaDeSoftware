@@ -1,0 +1,25 @@
+{
+  "name": "sgv-aps",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión y Venta de Artesanías del Pueblo Saraguro - Arquitectura de 3 Capas",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "artesanias",
+    "saraguro",
+    "clean-architecture",
+    "3-capas",
+    "express"
+  ],
+  "author": "Oliver Saraguro",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
